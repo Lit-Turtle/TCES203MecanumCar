@@ -1,0 +1,5 @@
+testing out this text file weither it works
+i need 
+git add .
+git commit -m""
+git push origin main
