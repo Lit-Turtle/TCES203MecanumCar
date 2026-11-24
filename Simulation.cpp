@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Simulation.h"
 
 void MecanumCar::applyCommand(MovementCommand cmd, double value) {
@@ -25,7 +26,6 @@ void MecanumCar::applyCommand(MovementCommand cmd, double value) {
             stopAllMotors();
             break;
     }
-}
 
 Simulator::Simulator(int size) {
     x = 0;
@@ -115,6 +115,10 @@ void Simulator::turnDirection(int amount) {
 }
 
 void Simulator::printState() const {
+
+}
+
+
     std::cout << "Car Position: (" << x << ", " << y << ")" << std::endl;
 
     std::cout << "Car Direction: ";
