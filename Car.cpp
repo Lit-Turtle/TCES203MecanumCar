@@ -60,7 +60,7 @@ void MecanumCar::turnLeft(double distance) {
     rearRight.enable();
 }
 
-void MecanumCar::turnright(double distance) {
+void MecanumCar::turnRight(double distance) {
 
     updatePose(-distance, 0.0, 0.0);
     frontLeft.setSpeed(50);
