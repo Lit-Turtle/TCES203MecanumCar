@@ -171,7 +171,7 @@ int main() {
                 double distanceSL;
                 bool valid = false;
                 do {
-                    cout << "Distance to strafe left: ";
+                    cout << "Distance to turn left: ";
                     if (cin >> distanceSL) {
                         valid = true;
                     } else {
@@ -187,7 +187,7 @@ int main() {
                 double distanceSR;
                 bool valid = false;
                 do {
-                    cout << "Distance to strafe right: ";
+                    cout << "Distance to turn right: ";
                     if (cin >> distanceSR) {
                         valid = true;
                     } else {
