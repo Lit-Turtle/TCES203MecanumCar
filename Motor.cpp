@@ -39,3 +39,6 @@ std::string Motor::getName() const {
     return name;
 }
 
+void setDirection() {
+
+}
