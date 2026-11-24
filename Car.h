@@ -1,7 +1,36 @@
-#ifndef CAR_MODEL_H
-#define CAR_MODEL_H
+#ifndef CAR_H
+#define CAR_H
 
 #include <string>
+#include "Camera.h"
+#include "Motor.h"
+
+enum class MovementCommand {
+    MoveForward,
+    MoveBackward,
+    StrafeLeft,
+    StrafeRight,
+    RotateLeft,
+    RotateRight,
+    Stop
+};
+
+struct MotorSnapshot {
+    std::string name;
+    int speedPercent;
+    bool enabled;
+};
+
+struct CarSnapshot {
+    double x;
+    double y;
+    double headingDeg;
+    bool cameraStreaming;
+    MotorSnapshot frontLeft;
+    MotorSnapshot frontRight;
+    MotorSnapshot rearLeft;
+    MotorSnapshot rearRight;
+};
 
 class MecanumCar {
 private:
@@ -9,6 +38,7 @@ private:
     Motor frontRight;
     Motor rearLeft;
     Motor rearRight;
+    Camera camera;
 
     double x;
     double y;
@@ -27,6 +57,9 @@ public:
     void rotateRight(double angleDeg);
 
     void stopAllMotors();
+    void cameraOn();
+    void cameraOff();
+    void captureFrame() const;
 
     double getX() const;
     double getY() const;

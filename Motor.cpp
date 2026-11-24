@@ -1,6 +1,4 @@
-#include <iostream>
 #include "Motor.h"
-#include <cmath>
 
 
 Motor::Motor() : name("unnamed"), speed(0), enabled(false) {
@@ -37,8 +35,4 @@ bool Motor::isEnabled() const {
 
 std::string Motor::getName() const {
     return name;
-}
-
-void setDirection() {
-
 }

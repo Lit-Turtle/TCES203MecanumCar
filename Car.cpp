@@ -1,12 +1,14 @@
 #include <iostream>
+#include <cmath>
 #include "Car.h"
 
 MecanumCar::MecanumCar()
     : frontLeft("front-left"),
-      frontRight("front-right"),
-      rearLeft("rear-left"),
-      rearRight("rear-right"),
-      x(0.0), y(0.0), headingDeg(0.0) {
+    frontRight("front-right"),
+    rearLeft("rear-left"),
+    rearRight("rear-right"),
+    camera(),
+    x(0.0), y(0.0), headingDeg(0.0) {
 }
 
 void MecanumCar::updatePose(double dx, double dy, double dThetaDeg) {
@@ -49,8 +51,8 @@ void MecanumCar::strafeLeft(double distance) {
     updatePose(-distance, 0.0, 0.0);
     frontLeft.setSpeed(-50);
     frontRight.setSpeed(50);
-    rearLeft.setSpeed(-50);
-    rearRight.setSpeed(50);
+    rearLeft.setSpeed(50);
+    rearRight.setSpeed(-50);
 
     frontLeft.enable();
     frontRight.enable();
@@ -63,8 +65,8 @@ void MecanumCar::strafeRight(double distance) {
     updatePose(distance, 0.0, 0.0);
     frontLeft.setSpeed(50);
     frontRight.setSpeed(-50);
-    rearLeft.setSpeed(50);
-    rearRight.setSpeed(-50);
+    rearLeft.setSpeed(-50);
+    rearRight.setSpeed(50);
 
     frontLeft.enable();
     frontRight.enable();
@@ -75,10 +77,10 @@ void MecanumCar::strafeRight(double distance) {
 void MecanumCar::rotateLeft(double angleDeg) {
 
     updatePose(0.0, 0.0, angleDeg);
-    frontLeft.setSpeed(-50);
-    frontRight.setSpeed(50);
-    rearLeft.setSpeed(-50);
-    rearRight.setSpeed(50);
+    frontLeft.setSpeed(50);
+    frontRight.setSpeed(-50);
+    rearLeft.setSpeed(50);
+    rearRight.setSpeed(-50);
 
     frontLeft.enable();
     frontRight.enable();
@@ -88,10 +90,10 @@ void MecanumCar::rotateLeft(double angleDeg) {
 
 void MecanumCar::rotateRight(double angleDeg) {
     updatePose(0.0, 0.0, -angleDeg);
-    frontLeft.setSpeed(50);
-    frontRight.setSpeed(-50);
-    rearLeft.setSpeed(50);
-    rearRight.setSpeed(-50);
+    frontLeft.setSpeed(-50);
+    frontRight.setSpeed(50);
+    rearLeft.setSpeed(-50);
+    rearRight.setSpeed(50);
 
     frontLeft.enable();
     frontRight.enable();
@@ -137,4 +139,52 @@ Motor MecanumCar::getRearLeftMotor() const {
 
 Motor MecanumCar::getRearRightMotor() const {
     return rearRight;
+}
+
+void MecanumCar::cameraOn() {
+    camera.startStreaming();
+}
+
+void MecanumCar::cameraOff() {
+    camera.stopStreaming();
+}
+
+void MecanumCar::captureFrame() const {
+    camera.captureFrame(x, y);
+}
+
+CarSnapshot MecanumCar::getSnapshot() const {
+    CarSnapshot snapshot;
+    snapshot.x = x;
+    snapshot.y = y;
+    snapshot.headingDeg = headingDeg;
+    snapshot.cameraStreaming = camera.isStreaming();
+
+    snapshot.frontLeft = {frontLeft.getName(), frontLeft.getSpeed(), frontLeft.isEnabled()};
+    snapshot.frontRight = {frontRight.getName(), frontRight.getSpeed(), frontRight.isEnabled()};
+    snapshot.rearLeft = {rearLeft.getName(), rearLeft.getSpeed(), rearLeft.isEnabled()};
+    snapshot.rearRight = {rearRight.getName(), rearRight.getSpeed(), rearRight.isEnabled()};
+
+    return snapshot;
+}
+
+Camera::Camera() : streaming(false)
+{
+
+}
+
+void Camera::startStreaming() {
+    streaming = true;
+}
+
+void Camera::stopStreaming() {
+    streaming = false;
+}
+
+bool Camera::isStreaming() const {
+    return streaming;
+}
+
+void Camera::captureFrame(double x, double y) const {
+    std::cout << "[Camera] Capturing frame at (" << x << ", " << y << ")" << std::endl;
 }
