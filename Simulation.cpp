@@ -8,11 +8,11 @@ void MecanumCar::applyCommand(MovementCommand cmd, double value) {
         case MovementCommand::MoveBackward:
             moveBackward(value);
             break;
-        case MovementCommand::StrafeLeft:
-            strafeLeft(value);
+        case MovementCommand::TurnLeft:
+            turnLeft(value);
             break;
-        case MovementCommand::StrafeRight:
-            strafeRight(value);
+        case MovementCommand::TurnRight:
+            turnRight(value);
             break;
         case MovementCommand::RotateLeft:
             rotateLeft(value);

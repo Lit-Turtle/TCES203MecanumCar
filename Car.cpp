@@ -47,7 +47,7 @@ void MecanumCar::moveBackward(double distance) {
     rearRight.enable();
 }
 
-void MecanumCar::strafeLeft(double distance) {
+void MecanumCar::turnLeft(double distance) {
     updatePose(-distance, 0.0, 0.0);
     frontLeft.setSpeed(-50);
     frontRight.setSpeed(50);
@@ -60,9 +60,9 @@ void MecanumCar::strafeLeft(double distance) {
     rearRight.enable();
 }
 
-void MecanumCar::strafeRight(double distance) {
+void MecanumCar::turnright(double distance) {
 
-    updatePose(distance, 0.0, 0.0);
+    updatePose(-distance, 0.0, 0.0);
     frontLeft.setSpeed(50);
     frontRight.setSpeed(-50);
     rearLeft.setSpeed(-50);

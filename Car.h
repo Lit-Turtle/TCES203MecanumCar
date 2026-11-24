@@ -8,8 +8,8 @@
 enum class MovementCommand {
     MoveForward,
     MoveBackward,
-    StrafeLeft,
-    StrafeRight,
+    TurnLeft,
+    TurnRight,
     RotateLeft,
     RotateRight,
     Stop
@@ -51,8 +51,8 @@ public:
 
     void moveForward(double distance);
     void moveBackward(double distance);
-    void strafeLeft(double distance);
-    void strafeRight(double distance);
+    void turnLeft(double distance);
+    void turnRight(double distance);
     void rotateLeft(double angleDeg);
     void rotateRight(double angleDeg);
 
