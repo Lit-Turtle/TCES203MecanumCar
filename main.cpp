@@ -5,11 +5,8 @@ using namespace std;
 #include "Car.h"
 
 // Interactive control mode: the user controls the car using simple commands.
-void interactiveMode()
+void keyboardControl(MecanumCar& car)
 {
-    MecanumCar car;
-    car.cameraOn(); // just to show that camera can be turned on/off
-
     char cmd = ' ';
     double value = 0.0;
 
@@ -30,25 +27,20 @@ void interactiveMode()
         std::cin >> cmd;
 
         if (!std::cin) {
+            car.stopAllMotors();
             return;
         }
 
         if (cmd == 'z') {
+            car.stopAllMotors();
             break;
         }
 
         if (cmd == 'c') {
-            // Toggle camera.
-            // We cannot directly read camera state,
-            // but we know startStream()/stopStream() exist.
-            // For simplicity, just call start or stop alternatively.
-            static bool cameraOnFlag = true;
-            if (cameraOnFlag) {
+            if (car.getSnapshot().cameraStreaming) {
                 car.cameraOff();
-                cameraOnFlag = false;
             } else {
                 car.cameraOn();
-                cameraOnFlag = true;
             }
             continue;
         }
@@ -58,11 +50,23 @@ void interactiveMode()
             continue;
         }
 
-        std::cout << "Enter value: ";
-        std::cin >> value;
-        if (!std::cin) {
-            return;
+        if (cmd != 'w' && cmd != 's' && cmd != 'a' &&
+            cmd != 'd' && cmd != 'q' && cmd != 'e') {
+            std::cout << "Unknown command.\n";
+            continue;
         }
+
+        std::cout << "Enter value: ";
+        bool validValue = false;
+        do {
+            if (std::cin >> value) {
+                validValue = true;
+            } else {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Please enter a number: ";
+            }
+        } while (!validValue);
 
         switch (cmd) {
         case 'w':
@@ -82,10 +86,6 @@ void interactiveMode()
             break;
         case 'e':
             car.rotateRight(value);
-            break;
-        
-        case ' ':
-            car.stopAllMotors();
             break;
         default:
             std::cout << "Unknown command.\n";
@@ -111,12 +111,14 @@ int main() {
             cout << "5) Rotate Left" << endl;
             cout << "6) Rotate Right" << endl;
             cout << "7) Stop" << endl;
-            cout << "8) Loop Around Desk" << endl;
-            cout << "9) Quit" << endl;
+            cout << "8) Wired Keyboard Control" << endl; //Need to be implemented
+            cout << "9) WiFi Control" << endl; //Needs to be implemented
+            cout << "10) Autonomous Loop Around Desk" << endl; //Needs to be implemented
+            cout << "11) Quit" << endl;
             cout << "Choice #: ";
 
             if (cin >> choice) {
-                if (choice < 1 || choice > 9) {
+                if (choice < 1 || choice > 11) {
                     cout << "Invalid choice. Enter a intger from given options." << endl;
 
                     cin.clear();
@@ -232,7 +234,21 @@ int main() {
             case 7: //Stop
                 car.stopAllMotors();
                 break;
-            case 8: //Loop Around Desk
+            case 8: //Keyboard control
+                keyboardControl(car);
+                break;
+            case 9: //Wifi Control
+                break;
+            case 10: //Autonomous Desk Movement
+                car.moveForward(500);
+                car.rotateLeft(90.0);
+                car.moveForward(200);
+                car.rotateLeft(90.0);
+                car.moveForward(600);
+                car.rotateLeft(90.0);
+                car.moveForward(200);
+                car.rotateLeft(90.0);
+                car.moveForward(50);
                 break;
             default: //Quit
                 return 0;
