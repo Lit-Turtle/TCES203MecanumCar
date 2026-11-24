@@ -12,7 +12,7 @@ enum class MovementCommand {
     TurnRight,
     RotateLeft,
     RotateRight,
-    Stop
+    Stop,
 };
 
 struct MotorSnapshot {
