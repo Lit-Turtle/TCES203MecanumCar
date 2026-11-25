@@ -119,11 +119,10 @@ int main() {
 
             if (cin >> choice) {
                 if (choice < 1 || choice > 11) {
-                    cout << "Invalid choice. Enter a intger from given options." << endl;
+                    cout << "Invalid choice. Enter an integer from the given options." << endl;
 
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Please enter an integer." << endl;
                 } else {
                     validInput = true;
                 }

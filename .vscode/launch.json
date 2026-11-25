@@ -1,17 +1,17 @@
 {
     "configurations": [
         {
-            "name": "C/C++: clang-cl.exe build and debug active file",
+            "name": "C/C++: build and debug MecanumCar",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${workspaceFolder}\\output\\main.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-            "miDebuggerPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\lldb.exe",
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\TDM-GCC-64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -24,7 +24,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: clang-cl.exe build active file"
+            "preLaunchTask": "C/C++: build MecanumCar"
         }
     ],
     "version": "2.0.0"
